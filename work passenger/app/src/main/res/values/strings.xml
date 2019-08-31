@@ -1,0 +1,177 @@
+<resources>
+    <string name="app_name">Passenger App</string>
+
+
+    <!--color-->
+    <color name="background_color">#ffffff</color>
+    <color name="secondary_color">#000000</color>
+    <color name="low_contrast">#cccccc</color>
+    <color name="primary_color">#f7950e</color>
+    <color name="dim_secondary">#191919</color>
+    <color name="high_contrast">#FF0000</color>
+    <color name="third_color">#808080</color>
+    <color name="fourth_color">#0000FF</color>
+    <color name="light_blue_color">#D6EAF8</color>
+    <color name="dark_blue_color">#2892DB</color>
+    <color name="dark_grey">#515A5A</color>
+    <color name="background_document_status">#FA8072</color>
+    <color name="business_profile_color">#62629d</color>
+
+
+    <integer name="max_length_phone_number">10</integer>
+    <dimen name="error_msg_strip_text_size">20sp</dimen>
+
+    <!--Launch Screen-->
+    <string name="launch_screen_continue">Continue with mobile number</string>
+    <string name="launch_screen_connect_soical">Or Connect with Social</string>
+    <string name="enter_mobile_screen_text">Enter Your Mobile Number</string>
+
+
+    <!--Verify Mobile-->
+    <string name="verify_title">Verify Mobile</string>
+    <string name="verify_mobile_text_place_holder">Enter the 4-digit code to sent to you at %1$s</string>
+    <string name="edit_number_text">Edit Number</string>
+    <string name="resend_text">Resend OTP</string>
+
+
+    <!--Social Account-->
+
+    <string name="social_choose_account">Choose an account</string>
+    <string name="social_facebook_text">Facebook</string>
+    <string name="social_google_text">Google</string>
+
+    <integer name="social_account_count">2</integer>
+    <string-array name="social_account_item_0">
+        <item>Facebook</item>
+        <item>@drawable/facebook</item>
+    </string-array>
+    <string-array name="social_account_item_1">
+        <item>Google</item>
+        <item>@drawable/google</item>
+    </string-array>
+
+    <!--Edit Mobile Number-->
+    <string name="edit_mobile_number_text">Enter Mobile Number</string>
+    <string name="edit_mobile_number_des_text">By continuing you may receive an SMS for verfication. Message and data rates may apply</string>
+    <string name="edit_enter_mobile_screen_text">Enter Your Mobile Number</string>
+
+    <!--Get Name-->
+
+    <string name="get_name_des_text">What is Your Name?</string>
+    <string name="get_first_name">First name</string>
+    <string name="get_last_name">Last name</string>
+
+    <!--AgreeMent-->
+    <string name="agreement_desc_text">By tapping the arrow below, you agree to our terms of use and acknowledge that you have read the Privacy policy</string>
+    <string name="agreement_first_text">To learn more, see our</string>
+    <string name="agreement_second_text">Terms of use</string>
+    <string name="agreement_third_text">and</string>
+    <string name="agreement_fourth_text">Privacy Policy.</string>
+
+    <!--Side Drawer-->
+    <string name="drawer_signout">Sign out</string>
+    <string name="drawermenuitem_count">6</string>
+    <array name="drawermenuitem_1">
+        <item></item>
+        <!-- Section Title -->
+        <item>Your ride</item>
+        <!-- Menu Label -->
+        <item>yourride</item>
+        <!-- Enums - This field not editable -->
+        <item></item>
+        <!-- URL -->
+        <item></item>
+        <!-- Internal / External browser -->
+        <item></item>
+        <!-- video url / website url -->
+        <item>Your ride</item>
+        <!-- Screen Page Title Label -->
+        <item>@drawable/your_rides</item>
+        <item>SignedIn</item>
+        <!-- Login non login configuration-->
+    </array>
+    <array name="drawermenuitem_2">
+        <item></item>
+        <item>Payment</item>
+        <item>payment</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item>Payment</item>
+        <item>@drawable/payments</item>
+        <item>SignedIn</item>
+    </array>
+    <array name="drawermenuitem_3">
+        <item></item>
+        <item>Wallet</item>
+        <item>wallet</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item>wallet</item>
+        <item>@drawable/wallets</item>
+        <item>SignedIn</item>
+    </array>
+
+    <array name="drawermenuitem_4">
+        <item></item>
+        <item>Notifications</item>
+        <item>notifications</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item>Notifications</item>
+        <item>@drawable/notifications</item>
+        <item>SignedIn</item>
+    </array>
+
+    <array name="drawermenuitem_5">
+        <item></item>
+        <item>Refer and Earn</item>
+        <item>referearn</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item>Refer and Earn</item>
+        <item>@drawable/refer_and_earn</item>
+        <item>SignedIn</item>
+    </array>
+    <array name="drawermenuitem_6">
+        <item></item>
+        <item>About</item>
+        <item>about</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item>About</item>
+        <item>@drawable/about</item>
+        <item>SignedIn</item>
+    </array>
+
+
+    <!--Home Screen-->
+
+    <string name="home_screen_button_ride_later">Ride Later</string>
+    <string name="home_screen_button_ride_now">Ride Now</string>
+
+
+    <!--Account Page-->
+    <string name="account_page_business_name">Business profile</string>
+    <string name="account_page_emergency_contact">Emergency Contact</string>
+
+    <!--Business Profile-->
+    <string name="business_desc_choose_this_profile">Choose this profile when booking work-related ride. Get Invoice and expense reports in ur offical email.</string>
+    <string name="business_btn_text">Set up Profile</string>
+    <string name="business_title_text">Business Profile</string>
+    <string name="business_title_set_profile_text">Set Your Profile</string>
+    <string name="business_email_id_text">Email Id</string>
+    <string name="business_reports_text">Reports</string>
+    <string name="business_reports_weekly_text">Weekly Reports</string>
+    <string name="business_payment_text">Payments</string>
+    <string name="pickup_from_label">Pickup from</string>
+    <string name="drop_from_label">Drop from</string>
+    <string name="pickup_location">Pickup Location</string>
+    <string name="drop_location">Drop Location</string>
+
+</resources>
+
