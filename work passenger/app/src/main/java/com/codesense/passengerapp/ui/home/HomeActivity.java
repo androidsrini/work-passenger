@@ -24,13 +24,15 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.codesense.passengerapp.R;
 import com.codesense.passengerapp.ui.drawer.DrawerActivity;
-import com.codesense.passengerapp.ui.socialaccount.SocialAccountAdpater;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -46,11 +48,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +57,7 @@ import java.util.List;
 @SuppressLint("Registered")
 public class HomeActivity extends DrawerActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
-    ImageView toolbarClose;
+    ImageView toolbarClose, mapPinImageView;
     LinearLayout ll_btn;
     Button btnRideLater,btnRideNow;
     RecyclerView recyclerView;
@@ -79,7 +78,7 @@ public class HomeActivity extends DrawerActivity implements OnMapReadyCallback,G
     String[] permissions = new String[]{
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION};
-
+    private boolean isPinAnimationCompleted;
 
 
     @Override
@@ -97,7 +96,7 @@ public class HomeActivity extends DrawerActivity implements OnMapReadyCallback,G
         btnRideLater = findViewById(R.id.btnRideLater);
         btnRideNow = findViewById(R.id.btnRideNow);
         recyclerView = findViewById(R.id.recyclerView);
-
+        mapPinImageView = findViewById(R.id.mapPinImageView);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         assert mapFragment != null;
@@ -202,20 +201,58 @@ public class HomeActivity extends DrawerActivity implements OnMapReadyCallback,G
 
     }
     private void updateMapUI(){
-        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.map_pointer);
+        //BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.map_pointer);
 
-        MarkerOptions markerOptions = new MarkerOptions();
+        //MarkerOptions markerOptions = new MarkerOptions();
 
         LatLng latLng = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
         // Setting the position for the marker
-        markerOptions.position(latLng);
-        markerOptions.icon(icon);
-        map.addMarker(markerOptions);
+        //markerOptions.position(latLng);
+        //markerOptions.icon(-1);
+        //map.addMarker(markerOptions);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(latLng)
                 .zoom(17).build();
         //Zoom in and animate the camera.
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        map.setOnCameraMoveListener(this::showAnimationMarker);
+    }
+
+    private void showAnimationMarker() {
+        if (!isPinAnimationCompleted) {
+            TranslateAnimation transAnim = new TranslateAnimation(0, 0, -screenHeight / 10, 0);
+            transAnim.setStartOffset(500);
+            transAnim.setDuration(3000);
+            transAnim.setRepeatCount(0);
+            transAnim.setRepeatMode(Animation.REVERSE);
+            transAnim.setInterpolator(new BounceInterpolator());
+            transAnim.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    isPinAnimationCompleted = true;
+                    final int left = mapPinImageView.getLeft();
+                    final int top = mapPinImageView.getTop();
+                    final int right = mapPinImageView.getRight();
+                    final int bottom = mapPinImageView.getBottom();
+                    mapPinImageView.layout(left, top, right, bottom);
+
+                }
+            });
+            mapPinImageView.startAnimation(transAnim);
+        }
     }
 
 

@@ -162,6 +162,13 @@
         android:layout_height="match_parent" />
 
     <ImageView
+        android:id="@+id/mapPinImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/map_pointer"
+        android:layout_centerInParent="true"/>
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dropCardView"
