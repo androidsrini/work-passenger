@@ -17,5 +17,11 @@ public interface ApiCallInterface {
     @GET(WebserviceUrls.API_INFO)
     Observable<JsonElement> getApiInfoRequest(@Header(Constant.API_AUTH_KEY_PARAM) String apiKey);
 
+    @GET(WebserviceUrls.COUNTRIES)
+    Observable<JsonElement> fetchCountryList(@Header(Constant.API_AUTH_KEY_PARAM) String apiKey);
 
+    @POST(WebserviceUrls.CONTINUE_WITH_MOBILE)
+    @FormUrlEncoded
+    Observable<JsonElement> postContinueWithMobileRequest(@Header(Constant.API_AUTH_KEY_PARAM) String apiKey,
+                                                          @FieldMap HashMap<String, String> param);
 }

@@ -172,6 +172,7 @@
     <string name="drop_from_label">Drop from</string>
     <string name="pickup_location">Pickup Location</string>
     <string name="drop_location">Drop Location</string>
+    <string name="loading">Loading...</string>
 
 </resources>
 

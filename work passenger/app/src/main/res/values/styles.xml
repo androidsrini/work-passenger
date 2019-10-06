@@ -6,6 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/black</item>
     </style>
 
     <style name="TitlebarText" parent="@android:style/TextAppearance.Medium">
@@ -21,8 +27,7 @@
     <style name="mapPickupDropCardViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">65dp</item>
-        <item name="android:layout_marginStart">10dp</item>
-        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:background">@mipmap/white_card_way_point</item>
     </style>
 
     <style name="pickupDropPlaceHolderStyle">
@@ -37,6 +42,14 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/pickup_drop_size</item>
         <item name="android:layout_marginStart">10dp</item>
+    </style>
+
+    <style name="LocationDownArrowStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:background">@mipmap/card_drop_down</item>
     </style>
 
 </resources>

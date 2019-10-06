@@ -17,22 +17,26 @@ import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.codesense.passengerapp.R;
 import com.codesense.passengerapp.ui.drawer.DrawerActivity;
+import com.codesense.passengerapp.ui.helper.Utils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -57,10 +61,16 @@ import java.util.List;
 @SuppressLint("Registered")
 public class HomeActivity extends DrawerActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+    private static final String TAG = HomeActivity.class.getName();
+    private static final float DISABLE_ALPHA = 0.8f;
+    private static final float ENABLE_ALPHA = 1f;
     ImageView toolbarClose, mapPinImageView;
     LinearLayout ll_btn;
     Button btnRideLater,btnRideNow;
     RecyclerView recyclerView;
+    private FrameLayout pickupCardView, dropCardView;
+    private ImageView pickupDownArrowImageView, deliveryDownArrowImageView, dottedWayLineImageView, pickupFavImageView;
+    private ConstraintLayout homeConstraintLayout;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest locationRequest;
     private LocationSettingsRequest.Builder locationSettingsRequest;
@@ -79,6 +89,7 @@ public class HomeActivity extends DrawerActivity implements OnMapReadyCallback,G
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION};
     private boolean isPinAnimationCompleted;
+    //private ConstraintSet constraintSet;
 
 
     @Override
@@ -91,17 +102,26 @@ public class HomeActivity extends DrawerActivity implements OnMapReadyCallback,G
     }
 
     private void initialize() {
+        homeConstraintLayout = findViewById(R.id.homeConstraintLayout);
         toolbarClose = findViewById(R.id.toolbarClose);
         ll_btn = findViewById(R.id.ll_btn);
         btnRideLater = findViewById(R.id.btnRideLater);
         btnRideNow = findViewById(R.id.btnRideNow);
         recyclerView = findViewById(R.id.recyclerView);
         mapPinImageView = findViewById(R.id.mapPinImageView);
+        pickupCardView = findViewById(R.id.pickupCardView);
+        dropCardView = findViewById(R.id.dropCardView);
+        pickupDownArrowImageView = findViewById(R.id.pickupDownArrowImageView);
+        deliveryDownArrowImageView = findViewById(R.id.deliveryDownArrowImageView);
+        dottedWayLineImageView = findViewById(R.id.dottedWayLineImageView);
+        pickupFavImageView = findViewById(R.id.pickupFavImageView);
+        //ConstraintSet object create
+        /*constraintSet = new ConstraintSet();
+        constraintSet.clone(homeConstraintLayout);*/
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        assert mapFragment != null;
+        //assert mapFragment != null;
         mapFragment.getMapAsync(this);
-
 
         recyclerView.setAdapter(new HomeCarTypeAdapter(this, screenWidth, screenHeight));
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -124,13 +144,71 @@ public class HomeActivity extends DrawerActivity implements OnMapReadyCallback,G
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
             checkPermission();
         }
+        pickupCardView.setOnClickListener(this::handlePickupAndDeliveryClick);
+        dropCardView.setOnClickListener(this::handlePickupAndDeliveryClick);
+        handlePickupAndDeliveryClick(pickupCardView);
+    }
 
+    /**
+     * This method to update topToBottom param value for dottedWayLineImageView view.
+     * @param resourceId
+     */
+    private void updateDottedWayLineTopParamUI(int resourceId) {
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) dottedWayLineImageView.getLayoutParams();
+        layoutParams.topToBottom = resourceId;
+        dottedWayLineImageView.setLayoutParams(layoutParams);
+    }
+
+    private void updateDropViewTopParamUI(int resourceId) {
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) dropCardView.getLayoutParams();
+        layoutParams.topToBottom = resourceId;
+        dropCardView.setLayoutParams(layoutParams);
+    }
+
+    private void handlePickupAndDeliveryClick(View v) {
+        switch (v.getId()) {
+            case R.id.pickupCardView:
+                dropCardView.setAlpha(DISABLE_ALPHA);
+                pickupCardView.setAlpha(ENABLE_ALPHA);
+                deliveryDownArrowImageView.setVisibility(View.GONE);
+                pickupDownArrowImageView.setVisibility(View.VISIBLE);
+                pickupFavImageView.setVisibility(View.VISIBLE);
+                updateDropViewTopParamUI(R.id.pickupDownArrowImageView);
+                updateDottedWayLineTopParamUI(R.id.pickupDownArrowImageView);
+            break;
+            case R.id.dropCardView:
+                pickupCardView.setAlpha(DISABLE_ALPHA);
+                dropCardView.setAlpha(ENABLE_ALPHA);
+                pickupDownArrowImageView.setVisibility(View.GONE);
+                pickupFavImageView.setVisibility(View.GONE);
+                deliveryDownArrowImageView.setVisibility(View.VISIBLE);
+                updateDropViewTopParamUI(R.id.pickupCardView);
+                updateDottedWayLineTopParamUI(R.id.deliveryDownArrowImageView);
+            break;
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         checkLocation();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.notificationMenu:
+                Utils.GetInstance().showToastMsg("Notificaiton clicked");
+                Log.d(TAG, " Notification menu clicked");
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void checkPermission(){

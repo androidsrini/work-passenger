@@ -25,7 +25,6 @@ public class BaseApplication extends DaggerApplication {
 
         ApplicationComponent component = DaggerApplicationComponent.builder().application(this).build();
         component.inject(this);
-
         return component;
     }
 

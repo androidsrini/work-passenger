@@ -26,13 +26,16 @@
 
         <!--AIzaSyB_uSY4FkzGpseQ0YFJUaksKFKKk5Q1J6c-->
         <meta-data
+            android:name="${applicationId}.ACCESS_TOKE"
+            android:value="96de7310df895a6909d0f63be35963772169442b5e62656501c1c006744cddbf50891c564e78106bbc29bcd12a47ae4d13ef66e3531b449cfc2863334e70e138" />
+        <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAfh-du45UuW_5rB56220ipNTWiduDE_ms" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ui.home.HomeActivity"
+        <activity android:name=".ui.splash.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,6 +44,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.launch.LaunchScreenActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".ui.home.HomeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.verifymobile.VerifyMobileActivity"

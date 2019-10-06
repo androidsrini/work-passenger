@@ -4,7 +4,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
 import com.codesense.passengerapp.base.BaseApplication;
-import com.product.process.helper.Constant;
+import com.codesense.passengerapp.net.Constant;
 
 public class ApiUtility {
     private static final ApiUtility ourInstance = new ApiUtility();
@@ -16,13 +16,12 @@ public class ApiUtility {
     private ApiUtility() {
     }
 
-    public String getApiKeyMetaData() {
+    public String getAccessTokenMetaData() {
         try {
             ApplicationInfo appInfo = BaseApplication.getBaseApplication().getPackageManager()
                     .getApplicationInfo(BaseApplication.getBaseApplication().getPackageName(), PackageManager.GET_META_DATA);
             if (appInfo.metaData != null)
-                return null;
-//                return String.valueOf(appInfo.metaData.getString(Constant.DRIVER_APP_API_KEY));
+                    return String.valueOf(appInfo.metaData.getString(BaseApplication.getBaseApplication().getPackageName() + Constant.ACCESS_TOKE_KEY));
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

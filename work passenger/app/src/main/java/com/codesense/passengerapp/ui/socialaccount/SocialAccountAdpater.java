@@ -2,10 +2,7 @@ package com.codesense.passengerapp.ui.socialaccount;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +46,7 @@ public class SocialAccountAdpater extends RecyclerView.Adapter<SocialAccountAdpa
         SocialAccountActivity.SocialActionInfo socialActionInfo = socialActionInfoList.get(position);
         String contentTitle = socialActionInfo.getActionName();
 
-        int actionImage = Utils.getDrawableResourceID(activity, socialActionInfo.getIconName());
+        int actionImage = Utils.GetInstance().getDrawableResourceID(activity, socialActionInfo.getIconName());
         holder.tvText.setText(contentTitle);
         holder.imgIcon.setImageDrawable(activity.getResources().getDrawable(actionImage));
 

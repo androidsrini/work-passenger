@@ -1,5 +1,6 @@
 package com.codesense.passengerapp.ui.agreement;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +17,6 @@ import android.widget.TextView;
 
 import com.codesense.passengerapp.R;
 import com.codesense.passengerapp.base.BaseActivity;
-import com.codesense.passengerapp.ui.getname.GetNameActivity;
 import com.codesense.passengerapp.ui.home.HomeActivity;
 import com.product.annotationbuilder.ProductBindView;
 import com.product.process.annotation.Initialize;
@@ -34,6 +34,10 @@ public class AgreementActivity extends BaseActivity {
     TextView tvPrivacyPolicy2;
     @Initialize(R.id.fbNext)
     FloatingActionButton fbNext;
+
+    public static void start(Context context) {
+        context.startActivity(new Intent(context, AgreementActivity.class));
+    }
 
     @Override
     protected int layoutRes() {

@@ -8,6 +8,10 @@ import com.google.gson.JsonElement;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.codesense.passengerapp.net.Status.ERROR;
+import static com.codesense.passengerapp.net.Status.LOADING;
+import static com.codesense.passengerapp.net.Status.SUCCESS;
+
 
 public class ApiResponse {
 
@@ -100,5 +104,15 @@ public class ApiResponse {
         return jsonObject;
     }
 
+    public static ApiResponse loading() {
+        return new ApiResponse(LOADING, null, null);
+    }
 
+    public static ApiResponse success(@NonNull JsonElement data) {
+        return new ApiResponse(SUCCESS, data, null);
+    }
+
+    public static ApiResponse error(@NonNull Throwable error) {
+        return new ApiResponse(ERROR, null, error);
+    }
 }

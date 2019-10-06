@@ -3,29 +3,22 @@ package com.codesense.passengerapp.ui.drawer;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,8 +30,6 @@ import com.codesense.passengerapp.ui.account.AccountActivity;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class DrawerActivity extends DaggerAppCompatActivity {
@@ -47,8 +38,8 @@ public class DrawerActivity extends DaggerAppCompatActivity {
     DrawerLayout drawerLayout;
     protected FrameLayout frameLayout;
     ListView drawerList;
-    Button drawerIcon;
-    public TextView titleTextView;
+    //Button drawerIcon;
+    //public TextView titleTextView;
 
     private Toolbar toolBar;
     View v;
@@ -65,7 +56,7 @@ public class DrawerActivity extends DaggerAppCompatActivity {
     public int screenWidth, screenHeight;
     ImageView drawerMenuIconSignOut;
     RelativeLayout drawerSignOutRelativeLayout;
-    Button notificationButton;
+    //Button notificationButton;
     RelativeLayout headerViewLayout;
 
 
@@ -77,33 +68,33 @@ public class DrawerActivity extends DaggerAppCompatActivity {
 
         toolBar = findViewById(R.id.toolBar);
         setSupportActionBar(toolBar);
-        getSupportActionBar().setIcon(new ColorDrawable(Color.TRANSPARENT));
+        /*getSupportActionBar().setIcon(new ColorDrawable(Color.TRANSPARENT));
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.primary_color)));
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        LayoutInflater inflater = LayoutInflater.from(this);
+        LayoutInflater inflater = LayoutInflater.from(this);*/
 
         calculateScreenSize();
-        v = inflater.inflate(R.layout.custom_title, null);
+        /*v = inflater.inflate(R.layout.custom_title, null);
         params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
 
         v.setLayoutParams(params);
-        this.getSupportActionBar().setCustomView(v);
+        this.getSupportActionBar().setCustomView(v);*/
 
 
-        titleTextView = findViewById(R.id.titleTextView);
+        //titleTextView = findViewById(R.id.titleTextView);
         drawerList = findViewById(R.id.drawerList);
         frameLayout = findViewById(R.id.frameLayout);
-        drawerIcon = findViewById(R.id.drawerIcon);
+        //drawerIcon = findViewById(R.id.drawerIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
-        notificationButton = findViewById(R.id.notificationButton);
+        //notificationButton = findViewById(R.id.notificationButton);
         drawerMenuIconSignOut = findViewById(R.id.drawerMenuIconSignOut);
         drawerSignOutRelativeLayout = findViewById(R.id.drawerSignOutRelativeLayout);
 
-        titleTextView.setTypeface(null, Typeface.BOLD);
+        //titleTextView.setTypeface(null, Typeface.BOLD);
 
         View header = getLayoutInflater().inflate(R.layout.drawer_header_view,
                 null);
@@ -116,11 +107,11 @@ public class DrawerActivity extends DaggerAppCompatActivity {
         int slideMenuHeight = (int) (screenWidth * 0.0864);
         int menuWidth = (int) (screenWidth * 0.0741); //0.5
 
-        RelativeLayout.LayoutParams btn_drawer = (RelativeLayout.LayoutParams) drawerIcon.getLayoutParams();
+        /*RelativeLayout.LayoutParams btn_drawer = (RelativeLayout.LayoutParams) drawerIcon.getLayoutParams();
         btn_drawer.setMargins(slideMenuLeftRightSpace, 0, slideMenuLeftRightSpace, 0);
         btn_drawer.width = slideMenuWidth;
         btn_drawer.height = slideMenuHeight;
-        drawerIcon.setLayoutParams(btn_drawer);
+        drawerIcon.setLayoutParams(btn_drawer);*/
 
         RelativeLayout.LayoutParams drawerMenuIconSignOutLay = (RelativeLayout.LayoutParams) drawerMenuIconSignOut.getLayoutParams();
         drawerMenuIconSignOutLay.setMargins(slideMenuLeftRightSpace, 0, slideMenuLeftRightSpace, 0);
@@ -129,16 +120,16 @@ public class DrawerActivity extends DaggerAppCompatActivity {
         drawerMenuIconSignOut.setLayoutParams(drawerMenuIconSignOutLay);
 
 
-        RelativeLayout.LayoutParams notificationButtonLay = (RelativeLayout.LayoutParams) notificationButton.getLayoutParams();
+        /*RelativeLayout.LayoutParams notificationButtonLay = (RelativeLayout.LayoutParams) notificationButton.getLayoutParams();
         notificationButtonLay.width = menuWidth;
         notificationButtonLay.height = menuWidth;
-        notificationButton.setLayoutParams(notificationButtonLay);
+        notificationButton.setLayoutParams(notificationButtonLay);*/
 
-        drawerIcon.setBackgroundResource(R.drawable.ic_drawer);
-        RelativeLayout.LayoutParams drawerIconLay = (RelativeLayout.LayoutParams) drawerIcon.getLayoutParams();
+        //drawerIcon.setBackgroundResource(R.drawable.ic_drawer);
+        /*RelativeLayout.LayoutParams drawerIconLay = (RelativeLayout.LayoutParams) drawerIcon.getLayoutParams();
         drawerIconLay.width = menuWidth;
         drawerIconLay.height = menuWidth;
-        drawerIcon.setLayoutParams(drawerIconLay);
+        drawerIcon.setLayoutParams(drawerIconLay);*/
 
         headerViewLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,14 +141,14 @@ public class DrawerActivity extends DaggerAppCompatActivity {
         drawerSignOutRelativeLayout.setOnClickListener((v) -> {
 
         });
-        drawerIcon.setOnClickListener(v -> {
+        /*drawerIcon.setOnClickListener(v -> {
             // TODO Auto-generated method stub
             if (drawerLayout.isDrawerOpen(Gravity.START)) {
                 drawerLayout.closeDrawers();
             } else {
                 drawerLayout.openDrawer(Gravity.START);
             }
-        });
+        });*/
         loadMenu();
     }
 
@@ -234,7 +225,7 @@ public class DrawerActivity extends DaggerAppCompatActivity {
         drawerList.setAdapter(adapter);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
-                R.drawable.ic_drawer, // nav
+                toolBar, // nav
                 // menu
                 // toggle
                 // icon

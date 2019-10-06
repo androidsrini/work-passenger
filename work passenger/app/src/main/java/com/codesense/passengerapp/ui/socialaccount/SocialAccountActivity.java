@@ -86,7 +86,7 @@ public class SocialAccountActivity extends BaseActivity {
     private void setUI() {
 
         int storeInfoActionListSize = getResources().getInteger(R.integer.social_account_count);
-        List<TypedArray> typedArrayList = Utils.getMultiTypedArray(this, Utils.SOCIAL_ACCOUNT_ACTION);
+        List<TypedArray> typedArrayList = Utils.GetInstance().getMultiTypedArray(this, Utils.SOCIAL_ACCOUNT_ACTION);
         if (storeInfoActionListSize > typedArrayList.size()) {
             storeInfoActionListSize = typedArrayList.size();
         }

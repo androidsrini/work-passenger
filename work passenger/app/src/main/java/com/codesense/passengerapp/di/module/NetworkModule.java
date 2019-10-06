@@ -85,11 +85,11 @@ public class NetworkModule {
         return retrofit.create(ApiCallInterface.class);
     }
 
-//    @Provides
-//    @Singleton
-//    protected RequestHandler provideRequestHandler(ApiCallInterface apiCallInterface) {
-//         return new RequestHandler(apiCallInterface);
-//    }
+    @Provides
+    @Singleton
+    protected RequestHandler provideRequestHandler(ApiCallInterface apiCallInterface) {
+         return new RequestHandler(apiCallInterface);
+    }
 
     @Provides
     @Singleton
