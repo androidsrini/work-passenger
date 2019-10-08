@@ -1,7 +1,10 @@
 package com.codesense.passengerapp.di.module;
 
 
+import android.content.Context;
+
 import com.codesense.passengerapp.di.utils.Utility;
+import com.codesense.passengerapp.localstoreage.AppSharedPreference;
 import com.codesense.passengerapp.net.ApiCallInterface;
 import com.codesense.passengerapp.net.RequestHandler;
 import com.codesense.passengerapp.net.WebserviceUrls;
@@ -25,6 +28,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class NetworkModule {
+
+    private final Context context;
+
+    public NetworkModule (Context context) {
+        this.context = context;
+    }
+
+    /*@Provides //scope is not necessary for parameters stored within the module
+    public Context context() {
+        return context;
+    }*/
 
     /*private static final NetworkModule networkModule = new NetworkModule();
 
@@ -88,12 +102,18 @@ public class NetworkModule {
     @Provides
     @Singleton
     protected RequestHandler provideRequestHandler(ApiCallInterface apiCallInterface) {
-         return new RequestHandler(apiCallInterface);
+         return new RequestHandler(apiCallInterface, provideAppSharedPreference());
     }
 
     @Provides
     @Singleton
     protected Utility provideUtility() {
          return new Utility();
+    }
+
+    @Provides
+    @Singleton
+    protected AppSharedPreference provideAppSharedPreference() {
+         return new AppSharedPreference(context);
     }
 }
