@@ -3,7 +3,6 @@ package com.codesense.passengerapp.base;
 
 import com.codesense.passengerapp.di.component.ApplicationComponent;
 import com.codesense.passengerapp.di.component.DaggerApplicationComponent;
-import com.codesense.passengerapp.di.module.NetworkModule;
 
 import javax.inject.Singleton;
 
@@ -24,8 +23,7 @@ public class BaseApplication extends DaggerApplication {
     @Override
     protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
 
-        ApplicationComponent component = DaggerApplicationComponent.builder()
-                .networkModule(new NetworkModule(this)).build();
+        ApplicationComponent component = DaggerApplicationComponent.builder().application(this).build();
         component.inject(this);
         return component;
     }

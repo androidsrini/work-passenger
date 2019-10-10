@@ -3,7 +3,6 @@ package com.codesense.passengerapp.ui.helper;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.provider.Settings;
 import android.support.annotation.UiThread;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -101,10 +100,5 @@ public class Utils {
      */
     public void showToastMsg(String msg) {
         Toast.makeText(BaseApplication.getBaseApplication(), msg, Toast.LENGTH_SHORT).show();
-    }
-
-    public String getDeviceId(Context context) {
-        return Settings.Secure.getString(context.getContentResolver(),
-                Settings.Secure.ANDROID_ID);
     }
 }

@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,13 +16,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.codesense.passengerapp.R;
 import com.codesense.passengerapp.base.BaseActivity;
-import com.codesense.passengerapp.di.utils.ApiUtility;
-import com.codesense.passengerapp.localstoreage.DatabaseClient;
-import com.codesense.passengerapp.net.ApiResponse;
-import com.codesense.passengerapp.net.RequestHandler;
-import com.codesense.passengerapp.ui.helper.Utils;
+import com.codesense.passengerapp.ui.launch.LaunchScreenActivity;
 import com.codesense.passengerapp.ui.verifymobile.VerifyMobileActivity;
 import com.hbb20.CountryCodePicker;
 import com.product.annotationbuilder.ProductBindView;
@@ -38,9 +34,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class EditMobileNumberActivity extends BaseActivity {
 
-    private static final String TAG = EditMobileNumberActivity.class.getName();
     private static final String PHONE_NUMBER_ARG = "PhoneNumber";
     private static final String USER_ID_ARG = "UserID";
+    private String userID, phoneNumber, phoneNo;
+
+
     @Initialize(R.id.toolbar)
     Toolbar toolbar;
     @Initialize(R.id.toolbarClose)
@@ -61,58 +59,6 @@ public class EditMobileNumberActivity extends BaseActivity {
     ImageButton imgNext;
     @Initialize(R.id.view2)
     View view2;
-    protected @Inject
-    RequestHandler requestHandler;
-    private String userID, phoneNumber, phoneNo;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-    public static void start(Context context) {
-        context.startActivity(new Intent(context, EditMobileNumberActivity.class));
-    }
-
-    public static void start(Context context, String userID, String phoneNumber) {
-        Intent intent = new Intent(context, EditMobileNumberActivity.class);
-        intent.putExtra(USER_ID_ARG, userID);
-        intent.putExtra(PHONE_NUMBER_ARG, phoneNumber);
-        context.startActivity(intent);
-    }
-
-    private void fetchCountryInDataBase(String countryName) {
-        compositeDisposable.add(DatabaseClient.getInstance(this).getAppDatabase().countryDao().findByCountryName(countryName)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                    Log.d(TAG, "Country name: " + result);
-                    changeMobileNumberRequest(result.countryDialCode);
-                }, error -> {
-                    Log.d(TAG, "Country name error: " + error);
-                }));
-    }
-
-    private void changeMobileNumberRequest(String dialCode) {
-        compositeDisposable.add(requestHandler.changeMobileNumberRequest(ApiUtility.getInstance().getAccessTokenMetaData(),
-                dialCode, checkPhoneNumber())
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(d->apiResponseHandler(ApiResponse.loading()))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result->apiResponseHandler(ApiResponse.success(result)),
-                        error->apiResponseHandler(ApiResponse.error(error))));
-    }
-
-    private void apiResponseHandler(ApiResponse apiResponse) {
-        switch (apiResponse.status) {
-            case LOADING:
-                Utils.GetInstance().showProgressDialog(this);
-                break;
-            case SUCCESS:
-                Utils.GetInstance().dismissDialog();
-                VerifyMobileActivity.start(EditMobileNumberActivity.this, etMobileNumber.getText().toString().trim(), false);
-                break;
-            case ERROR:
-                Utils.GetInstance().dismissDialog();
-                break;
-        }
-    }
 
     @Override
     protected int layoutRes() {
@@ -125,6 +71,13 @@ public class EditMobileNumberActivity extends BaseActivity {
         ProductBindView.bind(this);
         setUI();
         setDynamicValue();
+    }
+
+    public static void start(Context context, String userID, String phoneNumber) {
+        Intent intent = new Intent(context, EditMobileNumberActivity.class);
+        intent.putExtra(USER_ID_ARG, userID);
+        intent.putExtra(PHONE_NUMBER_ARG, phoneNumber);
+        context.startActivity(intent);
     }
 
     private void setDynamicValue() {
@@ -163,7 +116,8 @@ public class EditMobileNumberActivity extends BaseActivity {
     @Onclick(R.id.imgNext)
     public void imgNext(View v) {
         if (checkPhoneNumber() != null) {
-            fetchCountryInDataBase(country.getSelectedCountryName());
+            VerifyMobileActivity.start(EditMobileNumberActivity.this,etMobileNumber.getText().toString().trim());
+
 //            changeMobileNumberRequest(userID, checkPhoneNumber());
         } else {
             Toast.makeText(this, "Enter Valid Phone Number", Toast.LENGTH_SHORT).show();

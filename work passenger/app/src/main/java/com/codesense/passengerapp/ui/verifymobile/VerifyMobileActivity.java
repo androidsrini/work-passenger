@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -22,12 +23,8 @@ import android.widget.TextView;
 
 import com.codesense.passengerapp.R;
 import com.codesense.passengerapp.base.BaseActivity;
-import com.codesense.passengerapp.di.utils.ApiUtility;
-import com.codesense.passengerapp.net.ApiResponse;
-import com.codesense.passengerapp.net.RequestHandler;
 import com.codesense.passengerapp.ui.editmobilenumber.EditMobileNumberActivity;
 import com.codesense.passengerapp.ui.getname.GetNameActivity;
-import com.codesense.passengerapp.ui.helper.Utils;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.product.annotationbuilder.ProductBindView;
 import com.product.process.annotation.Initialize;
@@ -49,7 +46,6 @@ public class VerifyMobileActivity extends BaseActivity {
     private static final String TAG = "Driver";
     private static final String USER_ID_ARG = "UserID";
     private static final String PHONE_NUMBER_ARG = "PhoneNumber";
-    private static final String NEED_TO_CALL_SEND_API_ARG = "NeedToCallSendApi";
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Initialize(R.id.tvPhoneNumber)
@@ -67,7 +63,7 @@ public class VerifyMobileActivity extends BaseActivity {
     @Initialize(R.id.btnResend)
     Button btnResend;
     @Initialize(R.id.imgNext)
-    ImageButton imgNext;
+    FloatingActionButton imgNext;
     @Initialize(R.id.tvTitle)
     TextView tvTitle;
     @Initialize(R.id.view)
@@ -83,183 +79,17 @@ public class VerifyMobileActivity extends BaseActivity {
     @Initialize(R.id.errorResponseStripTextView)
     TextView errorResponseStripTextView;
     private String userID, phoneNumber;
-    @Inject RequestHandler requestHandler;
 
     private long timeCountInMilliSeconds = 60000;
     private int timeCountProgressSeconds = 1;
     private TimerStatus timerStatus = TimerStatus.STOPPED;
     private CountDownTimer countDownTimer;
     private boolean isValiedAllFields;
-    private boolean doesNeedToCallSendApi;
 
-    public static void start(Context context, String phoneNumber, boolean doesNeedToCallSendApi) {
+    public static void start(Context context, String phoneNumber) {
         Intent starter = new Intent(context, VerifyMobileActivity.class);
         starter.putExtra(PHONE_NUMBER_ARG, phoneNumber);
-        starter.putExtra(NEED_TO_CALL_SEND_API_ARG, doesNeedToCallSendApi);
         context.startActivity(starter);
-    }
-
-    /**
-     * This method is used for to send OTP request server.
-     */
-    private void sendOTPRequest() {
-        compositeDisposable.add(requestHandler.sendOtpRequest(ApiUtility.getInstance().getAccessTokenMetaData())
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(d -> apiResponseHandle(ApiResponse.loading(), ServiceType.SENT_OTP))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                            apiResponseHandle(ApiResponse.success(result), ServiceType.SENT_OTP);
-                        },
-                        error -> {
-                            apiResponseHandle(ApiResponse.error(error), ServiceType.SENT_OTP);
-                        }));
-    }
-
-    /**
-     * This method is used for to verify opt value with server
-     *
-     * @param otp
-     */
-    private void verifyOTPRequest(String otp) {
-        compositeDisposable.add(requestHandler.verifyOtpRequest(ApiUtility.getInstance().getAccessTokenMetaData(), otp)
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(d -> apiResponseHandle(ApiResponse.loading(), ServiceType.VERIFY_OTP))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> apiResponseHandle(ApiResponse.success(result), ServiceType.VERIFY_OTP),
-                        error -> apiResponseHandle(ApiResponse.error(error), ServiceType.VERIFY_OTP)));
-    }
-
-    /**
-     * This method will handle verify mobile screen api responses.
-     * @param apiResponse
-     * @param serviceType
-     */
-    private void apiResponseHandle(ApiResponse apiResponse, ServiceType serviceType) {
-        switch (apiResponse.status) {
-            case LOADING:
-                Utils.GetInstance().showProgressDialog(this);
-                break;
-            case SUCCESS:
-                Utils.GetInstance().dismissDialog();
-                if (ServiceType.SENT_OTP == serviceType) {
-                    //Start countdown timer
-                    if (apiResponse.getResponseStatus() != ApiResponse.OTP_VALIDATION) {
-                        startStop();
-                    } else {
-                        //Disabled resend button because of 'OTP_VALIDATION'
-                        btnResend.setEnabled(false);
-                    }
-                } else if (ServiceType.VERIFY_OTP == serviceType) {
-                    if (apiResponse.isValidResponse()) {
-                        GetNameActivity.start(this);
-                        finish();
-                        //AgreementActivity.start(this);
-                        //To finish this class.
-                        //finish();
-                    } else {
-                        //updateErrorMessageStripUI(apiResponse.getResponseMessage());
-                    }
-                }
-                break;
-            case ERROR:
-                Utils.GetInstance().dismissDialog();
-                if (ServiceType.SENT_OTP == serviceType) {
-                    //Start countdown timer
-                    startStop();
-                }
-                break;
-        }
-    }
-
-    /**
-     * This method to observe verfication code edit text and call verfiy api.
-     */
-    @UiThread
-    private void setEditTextObserver() {
-        // Show button Active code when enough fields active code
-        Observable<Boolean> mObsPhoneVerify1 = RxTextView.textChanges(optNumber1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(charSequence -> {
-                            boolean isField = null != charSequence && !charSequence.toString().equals("");
-                            boolean nextViewIsEmpty =  TextUtils.isEmpty(optNumber2.getText());
-                            if (isField) {
-                                optNumber1.setSelection(charSequence.length());
-                                if (nextViewIsEmpty) {
-                                    optNumber2.requestFocus();
-                                }
-                            }
-                            return isField;
-                        }
-                );
-        Observable<Boolean> mObsPhoneVerify2 = RxTextView.textChanges(optNumber2)
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(charSequence -> {
-                    boolean isField = null != charSequence && !charSequence.toString().equals("");
-                    boolean nextViewIsEmpty =  TextUtils.isEmpty(optNumber3.getText());
-                    boolean previousViewIsEmpty =  TextUtils.isEmpty(optNumber1.getText());
-                    if (isField) {
-                        optNumber2.setSelection(charSequence.length());
-                        if (nextViewIsEmpty) {
-                            optNumber3.requestFocus();
-                        }
-                    } else {
-                        if (!previousViewIsEmpty) {
-                            optNumber1.requestFocus();
-                        }
-                    }
-                    return isField;
-                });
-        Observable<Boolean> mObsPhoneVerify3 = RxTextView.textChanges(optNumber3)
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(charSequence -> {
-                    boolean isField = null != charSequence && !charSequence.toString().equals("");
-                    boolean nextViewIsEmpty =  TextUtils.isEmpty(optNumber4.getText());
-                    boolean previousViewIsEmpty =  TextUtils.isEmpty(optNumber2.getText());
-                    if (isField) {
-                        optNumber3.setSelection(charSequence.length());
-                        if (nextViewIsEmpty) {
-                            optNumber4.requestFocus();
-                        }
-                    } else {
-                        if (!previousViewIsEmpty) {
-                            optNumber2.requestFocus();
-                        }
-                    }
-                    return isField;
-                });
-        Observable<Boolean> mObsPhoneVerify4 = RxTextView.textChanges(optNumber4)
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(charSequence -> {
-                    //hideKeyboard();
-                    boolean isFieldNotEmpty =  charSequence != null && !charSequence.toString().equals("");
-                    boolean previousViewIsEmpty =  TextUtils.isEmpty(optNumber3.getText());
-                    if (!isFieldNotEmpty)  {
-                        if (!previousViewIsEmpty) {
-                            optNumber3.requestFocus();
-                        }
-                    } else {
-                        optNumber4.setSelection(charSequence.length());
-                    }
-                    return isFieldNotEmpty;
-                });
-
-        Disposable disposable = Observable
-                .combineLatest(mObsPhoneVerify1, mObsPhoneVerify2, mObsPhoneVerify3, mObsPhoneVerify4,
-                        (PhoneVerify1, PhoneVerify2, PhoneVerify3, PhoneVerify4)
-                                -> PhoneVerify1 && PhoneVerify2 && PhoneVerify3 && PhoneVerify4)
-                .subscribe(result -> {
-                    isValiedAllFields = result;
-                    Log.d(TAG, " The verify observable: " + result);
-                });
-        compositeDisposable.add(disposable);
-    }
-
-    private boolean isDoesNeedToCallSendApi() {
-        Intent intent = getIntent();
-        if (null != intent) {
-            doesNeedToCallSendApi = intent.getBooleanExtra(NEED_TO_CALL_SEND_API_ARG, false);
-        }
-        return doesNeedToCallSendApi;
     }
 
     @Override
@@ -275,7 +105,7 @@ public class VerifyMobileActivity extends BaseActivity {
         functionality();
         updateUI();
         startStop();
-        setEditTextObserver();
+
     }
 
     /**
@@ -283,7 +113,7 @@ public class VerifyMobileActivity extends BaseActivity {
      */
     @UiThread
     private void updateUI() {
-        tvTitle.setText(getResources().getText(R.string.verify_title));
+//        tvTitle.setText(getResources().getText(R.string.verify_title));
         tvPhoneNumber.setText(getString(R.string.verify_mobile_text_place_holder, getPhoneNumber()));
     }
 
@@ -354,8 +184,6 @@ public class VerifyMobileActivity extends BaseActivity {
                 view3.setBackgroundResource(R.drawable.view_for_edittext_primary);
             }
         });
-        if (isDoesNeedToCallSendApi())
-            sendOTPRequest();
     }
 
     @UiThread
@@ -438,12 +266,16 @@ public class VerifyMobileActivity extends BaseActivity {
                 + optNumber4.getText().toString();
     }
 
+
+
     private String getPhoneNumber() {
         if (null != getIntent() && TextUtils.isEmpty(phoneNumber)) {
             phoneNumber = getIntent().getStringExtra(PHONE_NUMBER_ARG);
         }
         return phoneNumber;
     }
+
+
 
     @Onclick(R.id.toolbarClose)
     public void toolbarClose(View v) {
@@ -452,13 +284,9 @@ public class VerifyMobileActivity extends BaseActivity {
 
     @Onclick(R.id.imgNext)
     public void imgNext(View v) {
-        /*Intent intent = new Intent(this, GetNameActivity.class);
-        startActivity(intent);*/
-        if (isValiedAllFields) {
-            verifyOTPRequest(getVerifyOtp());
-        } else {
-            Utils.GetInstance().showToastMsg("Enter OTP");
-        }
+        Intent intent = new Intent(this, GetNameActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void startCountDownTimer() {

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_without_background"/>
+    <RelativeLayout
+        android:id="@+id/rlMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+        <TextView
+            android:id="@+id/tvUpdateMobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@color/secondary_color"
+            android:text="@string/update_number_text"/>
+
+        <LinearLayout
+            android:id="@+id/ll_mobile_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:orientation="horizontal"
+            android:layout_below="@+id/tvUpdateMobile">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/country"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                app:ccp_showArrow="false"
+                android:clickable="false"
+                app:ccp_clickable="false"
+                android:paddingStart="10dp"/>
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6">
+
+
+                <EditText
+                    android:id="@+id/etMobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/enter_mobile_screen_text"
+                    android:layout_centerVertical="true"
+                    android:inputType="number"
+                    android:textSize="16sp"
+                    android:textColor="@color/secondary_color"
+                    android:textColorHint="@color/low_contrast"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/low_contrast"
+            android:layout_below="@+id/ll_mobile_number"/>
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="@string/update_button"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            android:textColor="@color/secondary_color"
+            android:background="@drawable/button_primary_filled"/>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

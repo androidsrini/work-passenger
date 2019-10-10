@@ -30,64 +30,8 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.6" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ProgressBar
-                android:id="@+id/webViewProgressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:max="100"
-                android:indeterminate="true"
-                android:progress="1"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-
-            <WebView
-                android:id="@+id/termsOfUseWebView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <WebView
-                android:id="@+id/privacyPolicyWebView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/termsOfUseWebView" />
-
-
-            <!--<TextView
-                android:id="@+id/tvLegalText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textColor="@color/third_color"
-                android:textSize="18sp"
-                android:text="@string/legal_text" />-->
-
-
-        </android.support.constraint.ConstraintLayout>
-
-    </ScrollView>
-
     <TextView
-        android:id="@+id/messageTextView"
+        android:id="@+id/tvPrivacyPolicy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -104,7 +48,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
         android:textColor="@color/secondary_color"
-        app:layout_constraintTop_toBottomOf="@+id/messageTextView"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrivacyPolicy"
         app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.design.widget.FloatingActionButton

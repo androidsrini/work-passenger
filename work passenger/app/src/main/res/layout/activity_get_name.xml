@@ -55,17 +55,21 @@
             android:textColor="@color/secondary_color" />
     </LinearLayout>
 
-    <ImageButton
+
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/imgNext"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
+        android:src="@drawable/right_arrow"
+        android:tint="@color/secondary_color"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
-        android:background="@drawable/round_button"
-        android:elevation="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_name"
-        android:src="@drawable/right_arrow" />
+        app:backgroundTint="@color/primary_color"
+        app:layout_anchorGravity="bottom|right|end" />
+
 
 </android.support.constraint.ConstraintLayout>
