@@ -65,7 +65,7 @@ public class ApiResponse {
     @Nullable
     private final JSONObject jsonObject;
 
-    protected ApiResponse(Status status, @Nullable JsonElement data, @Nullable Throwable error) {
+    private ApiResponse(Status status, @Nullable JsonElement data, @Nullable Throwable error) {
         this.status = status;
         this.data = data;
         this.error = error;

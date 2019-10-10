@@ -4,15 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<include-->
-    <!--android:id="@+id/toolbar"-->
-    <!--layout="@layout/toolbar_lay"/>-->
+    <include
+    android:id="@+id/toolbar"
+    layout="@layout/toolbar_lay"/>
 
     <RelativeLayout
         android:id="@+id/rlMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/high_contrast"
+        android:layout_below="@+id/toolbar"
         >
 
         <RelativeLayout

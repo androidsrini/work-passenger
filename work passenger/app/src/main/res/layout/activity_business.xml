@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:visibility="gone">
+        android:visibility="visible">
 
 
         <ImageView
@@ -64,7 +64,8 @@
         android:id="@+id/clBusinessAfter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tvSetProfileText"

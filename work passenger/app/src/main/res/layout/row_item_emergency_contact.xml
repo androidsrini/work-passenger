@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:id="@+id/rlEmergency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/business_profile_color"
+        android:padding="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgEmergency"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/emergency_contact" />
+
+        <TextView
+            android:id="@+id/tvEmergencyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/imgEmergency"
+            android:text="@string/business_email_id_text"
+            android:textColor="@color/secondary_color"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvEmergencyPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvEmergencyName"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/imgEmergency"
+            android:text="8789876545"
+            android:textColor="@color/secondary_color"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvEmergencyDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgEmergency"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/imgEmergency"
+            android:text="@string/emergency_add_desc"
+            android:textColor="@color/secondary_color"
+            android:textSize="16sp" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/saveContactSwitchCompat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:checked="true"
+            android:thumb="@drawable/new_card_switch_thumb"
+            app:track="@drawable/new_card_switch_selector" />
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

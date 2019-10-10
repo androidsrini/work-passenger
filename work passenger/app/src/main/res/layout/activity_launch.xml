@@ -85,6 +85,7 @@
                     android:hint="@string/enter_mobile_screen_text"
                     android:layout_centerVertical="true"
                     android:inputType="number"
+                    android:maxLength="10"
                     android:textColor="@color/secondary_color"
                     android:textColorHint="@color/low_contrast"
 
@@ -110,6 +111,21 @@
             android:textColor="@color/fourth_color"
             android:layout_below="@+id/view2"
             android:textSize="18sp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/imgNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/right_arrow"
+            android:tint="@color/secondary_color"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            app:backgroundTint="@color/primary_color"
+            app:layout_anchorGravity="bottom|right|end" />
+
     </RelativeLayout>
 
 

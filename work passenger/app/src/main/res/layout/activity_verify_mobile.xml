@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar_lay" />
+        layout="@layout/toolbar_without_background" />
 
     <TextView
         android:id="@+id/tvPhoneNumber"
@@ -193,16 +193,19 @@
                 android:layout_weight="0.8"
                 android:orientation="vertical">
 
-                <ImageButton
+                <android.support.design.widget.FloatingActionButton
                     android:id="@+id/imgNext"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@drawable/round_button"
-                    android:elevation="8dp"
-                    android:src="@drawable/right_arrow" />
+                    android:src="@drawable/right_arrow"
+                    android:layout_marginRight="25dp"
+                    android:tint="@color/secondary_color"
+                    app:backgroundTint="@color/primary_color"
+                    app:layout_anchorGravity="bottom|right|end" />
+
+
+
             </LinearLayout>
 
         </LinearLayout>

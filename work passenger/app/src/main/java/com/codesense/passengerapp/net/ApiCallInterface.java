@@ -24,46 +24,4 @@ public interface ApiCallInterface {
     @FormUrlEncoded
     Observable<JsonElement> postContinueWithMobileRequest(@Header(Constant.API_AUTH_KEY_PARAM) String apiKey,
                                                           @FieldMap HashMap<String, String> param);
-
-    @POST(WebserviceUrls.SEND_OTP)
-    @FormUrlEncoded
-    Observable<JsonElement> sendOtpRequest(@Header(Constant.API_AUTH_KEY_PARAM) String apiKey,
-                                           @Header(Constant.ACCESS_TOKE_PARAM) String accessToken,
-                                                          @FieldMap HashMap<String, String> param);
-
-
-    @POST(WebserviceUrls.VERIFY_OTP)
-    @FormUrlEncoded
-    Observable<JsonElement> verifyOtpRequest(@Header(Constant.API_AUTH_KEY_PARAM) String apiKey,
-                                             @Header(Constant.ACCESS_TOKE_PARAM) String accessToken,
-                                                          @FieldMap HashMap<String, String> param);
-
-
-    @POST(WebserviceUrls.UPDATE_PASSENGER_NAME)
-    @FormUrlEncoded
-    Observable<JsonElement> updatePassengerNameRequest(@Header(Constant.API_AUTH_KEY_PARAM) String apiKey,
-                                             @Header(Constant.ACCESS_TOKE_PARAM) String accessToken,
-                                                          @FieldMap HashMap<String, String> param);
-
-    @GET(WebserviceUrls.PASSENGER_AGREEMENT)
-    Observable<JsonElement> fetchAgreementRequest(@Header(Constant.API_AUTH_KEY_PARAM) String apiKey,
-                                             @Header(Constant.ACCESS_TOKE_PARAM) String accessToken);
-
-    @POST(WebserviceUrls.ACCEPT_CONDITIONS)
-    @FormUrlEncoded
-    Observable<JsonElement> setAcceptConditionsRequest(@Header(Constant.API_AUTH_KEY_PARAM) String apiKey,
-                                             @Header(Constant.ACCESS_TOKE_PARAM) String accessToken,
-                                                       @FieldMap HashMap<String, String> param);
-
-    @POST(WebserviceUrls.CHANGE_MOBILE_NUMBER)
-    @FormUrlEncoded
-    Observable<JsonElement> changeMobileNumberRequest(@Header(Constant.API_AUTH_KEY_PARAM) String apiKey,
-                                             @Header(Constant.ACCESS_TOKE_PARAM) String accessToken,
-                                                       @FieldMap HashMap<String, String> param);
-
-    @POST(WebserviceUrls.SIGNOUT)
-    @FormUrlEncoded
-    Observable<JsonElement> signoutRequest(@Header(Constant.API_AUTH_KEY_PARAM) String apiKey,
-                                             @Header(Constant.ACCESS_TOKE_PARAM) String accessToken,
-                                                       @FieldMap HashMap<String, String> param);
 }
