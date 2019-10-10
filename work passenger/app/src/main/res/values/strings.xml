@@ -8,14 +8,14 @@
     <color name="low_contrast">#cccccc</color>
     <color name="primary_color">#f7950e</color>
     <color name="dim_secondary">#191919</color>
-    <color name="high_contrast">#FF0000</color>
+    <color name="high_contrast">#ff7d7d</color>
     <color name="third_color">#808080</color>
     <color name="fourth_color">#0000FF</color>
     <color name="light_blue_color">#D6EAF8</color>
     <color name="dark_blue_color">#2892DB</color>
     <color name="dark_grey">#515A5A</color>
     <color name="background_document_status">#FA8072</color>
-    <color name="business_profile_color">#62629d</color>
+    <color name="business_profile_color">#6E6EC0</color>
 
 
     <integer name="max_length_phone_number">10</integer>
@@ -173,6 +173,47 @@
     <string name="pickup_location">Pickup Location</string>
     <string name="drop_location">Drop Location</string>
     <string name="loading">Loading...</string>
+
+
+
+    <!--Edit Profile-->
+    <string name="edit_profile_name">Name</string>
+    <string name="edit_profile_mobile">Mobile</string>
+    <string name="edit_profile_password">Password</string>
+    <string name="edit_confirm_profile_password">Confirm Password</string>
+    <string name="edit_profile_email">Email</string>
+    <string name="update_name_text">Update Name</string>
+    <string name="update_number_text">Update Number</string>
+    <string name="update_email_text">Update Email</string>
+    <string name="update_password_text">Update Password</string>
+    <string name="update_forgot_password_text">Forgot Password?</string>
+    <string name="update_button">Update</string>
+    <string name="update_name_desc_text">This name will be shown to the driver during ride pickup</string>
+    <string name="update_email_desc_text">This Email Id will be shown to the account page and use for account recovery</string>
+    <string name="update_verify_email_content_text">Email ID not verified! \n Please verify to continue</string>
+    <string name="update_verify_not_email_text">Haven\'t received the email</string>
+    <string name="update_verify_email_desc_text">We\'ve sent you an email with the verification link. Verification helps in account recovery</string>
+    <string name="update_verify_resend_link">Resend Email</string>
+
+
+    <!--Emergency-->
+    <string name="emergency_contact_desc">Let make travel safer alert your dear onces in case of an emergency. Add them to your emergency contacts.</string>
+    <string name="emergency_button_text">Add contacts</string>
+    <string name="emergency_add_contact_num">You can add upto 5 contacts</string>
+    <string name="emergency_add_desc">Always share your ride details</string>
+    <string name="emergency_bottom_add_desc">Enter Contact info to share your ride</string>
+
+    <!--Referal Program-->
+    <string name="referal_earn_title">Referal and Earning</string>
+    <string name="referal_inivite_friends">Invite Friends</string>
+    <string name="referal_code_earning">Referal Earnings</string>
+    <string name="paymentButton_text">Submit</string>
+
+    <!--Invite-->
+    <string name="invite_friends_title">Invite Friends</string>
+    <string name="invite_friend_share_code_text">SHARE YOUR INVITE CODE</string>
+    <string name="invite_friend_share_desc">Invite your friends by sharing above invite code and earn the referral amount</string>
+    <string name="invite_friend_button">Invite Friends</string>
 
 </resources>
 

@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import com.codesense.passengerapp.net.RequestHandler;
-import com.codesense.passengerapp.ui.getname.ProfileViewModel;
 import com.codesense.passengerapp.ui.launch.LaunchScreenViewModel;
 
 import javax.inject.Inject;
@@ -24,8 +23,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(LaunchScreenViewModel.class)) {
             return (T) new LaunchScreenViewModel(requestHandler);
-        } else if (modelClass.isAssignableFrom(ProfileViewModel.class)) {
-            return (T) new ProfileViewModel(requestHandler);
         }
         return null;
     }

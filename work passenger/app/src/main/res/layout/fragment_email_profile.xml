@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_without_background"/>
+    <RelativeLayout
+        android:id="@+id/rlMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/tvUpdateEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@color/secondary_color"
+            android:text="@string/update_email_text"/>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary_color"
+            android:textColorHint="@color/secondary_color"
+            android:hint="@string/business_email_id_text"
+            android:singleLine="true"
+            android:layout_marginEnd="7dp"
+            android:imeOptions="actionNext"
+            android:textSize="18sp"
+            android:textColor="@color/secondary_color"
+            android:layout_below="@+id/tvUpdateEmail"/>
+        <TextView
+            android:id="@+id/tvTextViewDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/update_email_desc_text"
+            android:layout_below="@+id/etEmail"/>
+
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="@string/update_button"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            android:textColor="@color/secondary_color"
+            android:background="@drawable/button_primary_filled"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlVerification"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
+
+        <TextView
+            android:id="@+id/tvEmailContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/secondary_color"
+            android:text="@string/update_verify_email_content_text"/>
+
+        <EditText
+            android:id="@+id/etEmailVerify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary_color"
+            android:textColorHint="@color/secondary_color"
+            android:hint="@string/business_email_id_text"
+            android:singleLine="true"
+            android:layout_marginEnd="7dp"
+            android:imeOptions="actionNext"
+            android:textSize="18sp"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/secondary_color"
+            android:layout_below="@+id/tvEmailContent"/>
+
+        <TextView
+            android:id="@+id/tvTextViewDesc1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/update_verify_email_desc_text"
+            android:layout_below="@+id/etEmailVerify"/>
+
+        <TextView
+            android:id="@+id/tvTextViewDesc2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/update_verify_not_email_text"
+            android:layout_below="@+id/tvTextViewDesc1"
+            android:layout_marginTop="25dp"/>
+
+
+        <TextView
+            android:id="@+id/tvResend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/update_verify_resend_link"
+            android:textColor="@color/dark_blue_color"
+            android:layout_below="@+id/tvTextViewDesc2"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

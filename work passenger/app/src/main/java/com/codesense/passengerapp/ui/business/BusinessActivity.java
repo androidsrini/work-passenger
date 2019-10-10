@@ -124,7 +124,7 @@ public class BusinessActivity extends BaseActivity {
         rlPayments.setPadding(topBottomSpace * 2, topBottomSpace * 2, topBottomSpace * 2, topBottomSpace * 2);
 
         ConstraintLayout.LayoutParams tvSetProfileTextLayParams = (ConstraintLayout.LayoutParams) tvSetProfileText.getLayoutParams();
-        tvSetProfileTextLayParams.setMargins(topBottomSpace * 3, 0, topBottomSpace * 3, 0);
+        tvSetProfileTextLayParams.setMargins(topBottomSpace * 3, topBottomSpace*5, topBottomSpace * 3, 0);
         tvSetProfileText.setLayoutParams(tvSetProfileTextLayParams);
 
         ConstraintLayout.LayoutParams btnSetProfileAfterParams = (ConstraintLayout.LayoutParams) btnSetProfileAfter.getLayoutParams();
@@ -167,5 +167,29 @@ public class BusinessActivity extends BaseActivity {
 //    private void toolbarClose() {
 //        finish();
 //    }
+
+    @Onclick(R.id.toolbarClose)
+    public void toolbarClose(View v) {
+        if (clBusinessAfter.getVisibility() == View.VISIBLE){
+            clMain.setVisibility(View.VISIBLE);
+            clBusinessAfter.setVisibility(View.GONE);
+        }else{
+            finish();
+        }
+    }
+    @Onclick(R.id.btnSetProfile)
+    public void btnSetProfile(View v) {
+        if (clMain.getVisibility() == View.VISIBLE){
+            clMain.setVisibility(View.GONE);
+            clBusinessAfter.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Onclick(R.id.btnSetProfileAfter)
+    public void btnSetProfileAfter(View v) {
+        if (clBusinessAfter.getVisibility() == View.VISIBLE){
+            finish();
+        }
+    }
 
 }

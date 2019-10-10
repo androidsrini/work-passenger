@@ -13,46 +13,65 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.codesense.passengerapp.R;
+import com.codesense.passengerapp.base.BaseActivity;
 import com.codesense.passengerapp.ui.business.BusinessActivity;
 import com.codesense.passengerapp.ui.drawer.DrawerActivity;
+import com.codesense.passengerapp.ui.editprofile.EditProfileActivity;
+import com.codesense.passengerapp.ui.emergency.EmergencyActivity;
+import com.product.annotationbuilder.ProductBindView;
+import com.product.process.annotation.Initialize;
+import com.product.process.annotation.Onclick;
 
 @SuppressLint("Registered")
-public class AccountActivity extends DrawerActivity implements View.OnClickListener {
+public class AccountActivity extends BaseActivity {
 
-    RelativeLayout rlMain, rlUserDetails, rlBusinessDetails, rlEmergency;
-    ImageView imgProfile, imgProfileArrow, imgBusiness, imgBusinessArrow, imgEmergency, imgEmergencyArrow, toolbarClose;
-    TextView tvProfileName, tvPhoneNumber, tvEmail, tvBusinessText, tvEmergencyText, tvTitle;
+    @Initialize(R.id.rlMain)
+    RelativeLayout rlMain;
+    @Initialize(R.id.rlUserDetails)
+    RelativeLayout rlUserDetails;
+    @Initialize(R.id.rlBusinessDetails)
+    RelativeLayout rlBusinessDetails;
+    @Initialize(R.id.rlEmergency)
+    RelativeLayout rlEmergency;
+    @Initialize(R.id.imgProfile)
+    ImageView imgProfile;
+    @Initialize(R.id.imgProfileArrow)
+    ImageView imgProfileArrow;
+    @Initialize(R.id.imgBusiness)
+    ImageView imgBusiness;
+    @Initialize(R.id.imgBusinessArrow)
+    ImageView imgBusinessArrow;
+    @Initialize(R.id.imgEmergency)
+    ImageView imgEmergency;
+    @Initialize(R.id.imgEmergencyArrow)
+    ImageView imgEmergencyArrow;
+    @Initialize(R.id.toolbarClose)
+    ImageView toolbarClose;
+    @Initialize(R.id.tvProfileName)
+    TextView tvProfileName;
+    @Initialize(R.id.tvPhoneNumber)
+    TextView tvPhoneNumber;
+    @Initialize(R.id.tvEmail)
+    TextView tvEmail;
+    @Initialize(R.id.tvBusinessText)
+    TextView tvBusinessText;
+    @Initialize(R.id.tvEmergencyText)
+    TextView tvEmergencyText;
+    @Initialize(R.id.tvTitle)
+    TextView tvTitle;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        @SuppressLint("InflateParams") View contentView = inflater.inflate(R.layout.activity_account, null, false);
-        frameLayout.addView(contentView);
-        initialize();
+        ProductBindView.bind(this);
         setDynamicValue();
+
+        tvTitle.setText("Your Account");
     }
-
-    private void initialize() {
-        rlMain = findViewById(R.id.rlMain);
-        rlUserDetails = findViewById(R.id.rlUserDetails);
-        imgProfile = findViewById(R.id.imgProfile);
-        tvProfileName = findViewById(R.id.tvProfileName);
-        tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
-        tvEmail = findViewById(R.id.tvEmail);
-        imgProfileArrow = findViewById(R.id.imgProfileArrow);
-        rlBusinessDetails = findViewById(R.id.rlBusinessDetails);
-        imgBusiness = findViewById(R.id.imgBusiness);
-        tvBusinessText = findViewById(R.id.tvBusinessText);
-        imgBusinessArrow = findViewById(R.id.imgBusinessArrow);
-        rlEmergency = findViewById(R.id.rlEmergency);
-        imgEmergency = findViewById(R.id.imgEmergency);
-        tvEmergencyText = findViewById(R.id.tvEmergencyText);
-        imgEmergencyArrow = findViewById(R.id.imgEmergencyArrow);
-//        toolbarClose = findViewById(R.id.toolbarClose);
-//        tvTitle = findViewById(R.id.tvTitle);
-
-        rlBusinessDetails.setOnClickListener(this);
+    @Override
+    protected int layoutRes() {
+        return R.layout.activity_account;
     }
 
     private void setDynamicValue() {
@@ -62,7 +81,10 @@ public class AccountActivity extends DrawerActivity implements View.OnClickListe
         int imgArrowHeight = (int) (screenWidth * 0.075);
 
         int topBottomSpace = (int) (screenHeight * 0.0089);
-
+        RelativeLayout.LayoutParams imgLayParams = (RelativeLayout.LayoutParams) toolbarClose.getLayoutParams();
+        imgLayParams.width = imgIconWidth;
+        imgLayParams.height = imgIconHeight;
+        toolbarClose.setLayoutParams(imgLayParams);
 
         RelativeLayout.LayoutParams rlMainLayParams = (RelativeLayout.LayoutParams) rlMain.getLayoutParams();
         rlMainLayParams.setMargins(0, topBottomSpace * 7, 0, 0);
@@ -86,11 +108,26 @@ public class AccountActivity extends DrawerActivity implements View.OnClickListe
 
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.rlBusinessDetails) {
-            Intent intent = new Intent(this, BusinessActivity.class);
-            startActivity(intent);
-        }
+
+    @Onclick(R.id.toolbarClose)
+    public void toolbarClose(View v) {
+        finish();
+    }
+
+    @Onclick(R.id.rlBusinessDetails)
+    public void rlBusinessDetails(View v) {
+        Intent intent = new Intent(this, BusinessActivity.class);
+        startActivity(intent);
+    }
+
+    @Onclick(R.id.rlUserDetails)
+    public void rlUserDetails(View v) {
+        Intent intent = new Intent(this, EditProfileActivity.class);
+        startActivity(intent);
+    }
+    @Onclick(R.id.rlEmergency)
+    public void rlEmergency(View v) {
+        Intent intent = new Intent(this, EmergencyActivity.class);
+        startActivity(intent);
     }
 }

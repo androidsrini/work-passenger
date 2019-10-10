@@ -1,12 +1,11 @@
 package com.codesense.passengerapp.ui.getname;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,15 +16,10 @@ import android.widget.TextView;
 
 import com.codesense.passengerapp.R;
 import com.codesense.passengerapp.base.BaseActivity;
-import com.codesense.passengerapp.di.utils.ApiUtility;
-import com.codesense.passengerapp.net.ApiResponse;
 import com.codesense.passengerapp.ui.agreement.AgreementActivity;
-import com.codesense.passengerapp.ui.helper.Utils;
 import com.product.annotationbuilder.ProductBindView;
 import com.product.process.annotation.Initialize;
 import com.product.process.annotation.Onclick;
-
-import javax.inject.Inject;
 
 public class GetNameActivity extends BaseActivity {
 
@@ -42,48 +36,7 @@ public class GetNameActivity extends BaseActivity {
     @Initialize(R.id.etLastName)
     EditText etLastName;
     @Initialize(R.id.imgNext)
-    ImageButton imgNext;
-    @Inject
-    ProfileViewModel profileViewModel;
-
-    public static void start(Context context) {
-        context.startActivity(new Intent(context, GetNameActivity.class));
-    }
-
-    private String getEtFirstName() {
-        return etFirstName.getText().toString().trim();
-    }
-
-    private String getEtLastName() {
-        return etLastName.getText().toString().trim();
-    }
-
-    private boolean isValidAllFields() {
-        boolean isValid = true;
-        if (TextUtils.isEmpty(getEtFirstName())) {
-            isValid = false;
-            Utils.GetInstance().showToastMsg("First name empty");
-        } else if (TextUtils.isEmpty(getEtLastName())) {
-            isValid = false;
-            Utils.GetInstance().showToastMsg("Last name empty");
-        }
-        return isValid;
-    }
-
-    private void apiResponseHandler(ApiResponse apiResponse) {
-        switch (apiResponse.status) {
-            case LOADING:
-                Utils.GetInstance().showProgressDialog(this);
-                break;
-            case SUCCESS:
-                Utils.GetInstance().dismissDialog();
-                AgreementActivity.start(this);
-                break;
-            case ERROR:
-                Utils.GetInstance().dismissDialog();
-                break;
-        }
-    }
+    FloatingActionButton imgNext;
 
     @Override
     protected int layoutRes() {
@@ -94,7 +47,6 @@ public class GetNameActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ProductBindView.bind(this);
-        profileViewModel.getApiResponseMutableLiveData().observe(this, this::apiResponseHandler);
         setDynamicValue();
     }
 
@@ -115,11 +67,11 @@ public class GetNameActivity extends BaseActivity {
         tvNameDes.setLayoutParams(tvNameDesLayout);
 
         ConstraintLayout.LayoutParams viewLayout = (ConstraintLayout.LayoutParams) ll_name.getLayoutParams();
-        viewLayout.setMargins(topBottomSpace * 3, topBottomSpace * 6, topBottomSpace * 3, 0);
+        viewLayout.setMargins(topBottomSpace*3, topBottomSpace * 6, topBottomSpace*3, 0);
         ll_name.setLayoutParams(viewLayout);
 
         ConstraintLayout.LayoutParams imgNextLayout = (ConstraintLayout.LayoutParams) imgNext.getLayoutParams();
-        imgNextLayout.setMargins(0, topBottomSpace * 9, topBottomSpace * 3, 0);
+        imgNextLayout.setMargins(0, topBottomSpace * 9, topBottomSpace*3, 0);
         imgNext.setLayoutParams(imgNextLayout);
 
     }
@@ -131,12 +83,8 @@ public class GetNameActivity extends BaseActivity {
 
     @Onclick(R.id.imgNext)
     public void imgNext(View v) {
-        if (isValidAllFields()) {
-            profileViewModel.updatePassengerNameRequest(ApiUtility.getInstance().getAccessTokenMetaData(),
-                    getEtFirstName(), getEtLastName());
-        }
-        /*Intent intent = new Intent(this, AgreementActivity.class);
+        Intent intent = new Intent(this, AgreementActivity.class);
         startActivity(intent);
-        finish();*/
+        finish();
     }
 }

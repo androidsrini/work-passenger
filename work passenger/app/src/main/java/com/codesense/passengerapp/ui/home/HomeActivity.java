@@ -91,10 +91,6 @@ public class HomeActivity extends DrawerActivity implements OnMapReadyCallback,G
     private boolean isPinAnimationCompleted;
     //private ConstraintSet constraintSet;
 
-    public static void start(Context context) {
-        context.startActivity(new Intent(context, HomeActivity.class));
-    }
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
