@@ -23,7 +23,12 @@ public final class Constant {
     public static final String PHONE_NUMBER_PARAM = "phone_number";
     public static final String OTP_PARAM = "otp";
     public static final String COUNTRY_DIAL_CODE_PARAM = "country_dial_code";
+    public static final String DEVICE_ID_PARAM = "device_id";
     public static final String ACCESS_TOKE_KEY = ".ACCESS_TOKE" ;
+    public static final String ACCESS_TOKE_PARAM = "access_token" ;
+    public static final String ACCEPT_CONDITIONS_PARAM = "accept_conditions" ;
+    public static final String ACCEPTED = "1" ;
+    public static final String NOT_ACCEPTED = "0" ;
     public static final String LOCATION_SERVICE = "localstoreage.LocationService" ;
     public static final String LOCATION_SERVICE_PACKAGE = "com.codesense.driverapp" ;
 }

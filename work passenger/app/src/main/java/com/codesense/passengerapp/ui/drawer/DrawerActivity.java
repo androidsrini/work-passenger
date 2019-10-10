@@ -10,6 +10,7 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -26,12 +27,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.codesense.passengerapp.R;
+import com.codesense.passengerapp.di.utils.ApiUtility;
+import com.codesense.passengerapp.localstoreage.AppSharedPreference;
+import com.codesense.passengerapp.net.ApiResponse;
+import com.codesense.passengerapp.net.RequestHandler;
 import com.codesense.passengerapp.ui.account.AccountActivity;
 import com.codesense.passengerapp.ui.referalprogram.ReferalProgramActivity;
-
+import com.codesense.passengerapp.ui.helper.Utils;
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import dagger.android.support.DaggerAppCompatActivity;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class DrawerActivity extends DaggerAppCompatActivity {
 
@@ -59,6 +69,37 @@ public class DrawerActivity extends DaggerAppCompatActivity {
     RelativeLayout drawerSignOutRelativeLayout;
     //Button notificationButton;
     RelativeLayout headerViewLayout;
+    @Inject
+    protected RequestHandler requestHandler;
+    @Inject protected AppSharedPreference appSharedPreference;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+    private void signoutRequest() {
+        //Need to clear DB first.
+        compositeDisposable.add(requestHandler.signoutRequest(ApiUtility.getInstance().getAccessTokenMetaData())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(d->apiResponseHandler(ApiResponse.loading()))
+                .subscribe(result->apiResponseHandler(ApiResponse.success(result)),
+                        error->apiResponseHandler(ApiResponse.error(error))));
+    }
+
+    private void apiResponseHandler(ApiResponse apiResponse) {
+        switch (apiResponse.status) {
+            case LOADING:
+                Utils.GetInstance().showProgressDialog(this);
+                break;
+            case SUCCESS:
+                Utils.GetInstance().dismissDialog();
+                appSharedPreference.clear();
+                ActivityCompat.finishAffinity(this);
+                finish();
+                break;
+            case ERROR:
+                Utils.GetInstance().dismissDialog();
+                break;
+        }
+    }
 
 
     @Override
@@ -140,7 +181,7 @@ public class DrawerActivity extends DaggerAppCompatActivity {
             }
         });
         drawerSignOutRelativeLayout.setOnClickListener((v) -> {
-
+            signoutRequest();
         });
         /*drawerIcon.setOnClickListener(v -> {
             // TODO Auto-generated method stub

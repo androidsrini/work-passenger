@@ -3,7 +3,6 @@ package com.codesense.passengerapp.ui.launch;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.codesense.passengerapp.net.ApiResponse;
 import com.codesense.passengerapp.net.RequestHandler;
 
 import javax.inject.Inject;
@@ -17,32 +16,38 @@ public class LaunchScreenViewModel extends ViewModel {
     private RequestHandler requestHandler;
 
     private final CompositeDisposable disposables = new CompositeDisposable();
-    private MutableLiveData<ApiResponse> apiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<LaunchScreenApiResponse> apiResponseMutableLiveData = new MutableLiveData<>();
 
     @Inject
     public LaunchScreenViewModel(RequestHandler requestHandler) {
         this.requestHandler = requestHandler;
     }
 
-    public MutableLiveData<ApiResponse> getApiResponseMutableLiveData() {
+    public MutableLiveData<LaunchScreenApiResponse> getApiResponseMutableLiveData() {
         return apiResponseMutableLiveData;
     }
 
     public void fetchCountryList(String apiKey) {
         disposables.add(requestHandler.fetchCountryList(apiKey)
                 .subscribeOn(Schedulers.io())
-                .doOnSubscribe(d->apiResponseMutableLiveData.setValue(ApiResponse.loading()))
+                .doOnSubscribe(d->apiResponseMutableLiveData.setValue(LaunchScreenApiResponse.loading()
+                        .setServiceType(LaunchScreenApiResponse.ServiceType.COUNTRIES)))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result-> apiResponseMutableLiveData.setValue(ApiResponse.success(result)),
-                        error -> apiResponseMutableLiveData.setValue(ApiResponse.error(error))));
+                .subscribe(result-> apiResponseMutableLiveData.setValue(LaunchScreenApiResponse.success(result)
+                                .setServiceType(LaunchScreenApiResponse.ServiceType.COUNTRIES)),
+                        error -> apiResponseMutableLiveData.setValue(LaunchScreenApiResponse.error(error)
+                                .setServiceType(LaunchScreenApiResponse.ServiceType.COUNTRIES))));
     }
 
-    public void postContinueWithMobileRequest(String apiKey, String countryCode, String mobileNumber) {
-        disposables.add(requestHandler.postContinueWithMobileRequest(apiKey, countryCode, mobileNumber)
+    public void postContinueWithMobileRequest(String apiKey, String deviceId, String countryCode, String mobileNumber) {
+        disposables.add(requestHandler.postContinueWithMobileRequest(apiKey, deviceId, countryCode, mobileNumber)
                 .subscribeOn(Schedulers.io())
-                .doOnSubscribe(d->apiResponseMutableLiveData.setValue(ApiResponse.loading()))
+                .doOnSubscribe(d->apiResponseMutableLiveData.setValue(LaunchScreenApiResponse.loading()
+                        .setServiceType(LaunchScreenApiResponse.ServiceType.CONTINUE_WITH_MOBILE)))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result-> apiResponseMutableLiveData.setValue(ApiResponse.success(result)),
-                        error -> apiResponseMutableLiveData.setValue(ApiResponse.error(error))));
+                .subscribe(result-> apiResponseMutableLiveData.setValue(LaunchScreenApiResponse.success(result)
+                                .setServiceType(LaunchScreenApiResponse.ServiceType.CONTINUE_WITH_MOBILE)),
+                        error -> apiResponseMutableLiveData.setValue(LaunchScreenApiResponse.error(error)
+                                .setServiceType(LaunchScreenApiResponse.ServiceType.CONTINUE_WITH_MOBILE))));
     }
 }
